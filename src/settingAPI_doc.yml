@@ -1,0 +1,492 @@
+openapi: 3.0.0
+info:
+  title: "Setting Page API"
+  description: "站台管理 API"
+  version: "1.0"
+
+tags:
+  - name: "單獨取得帳號"
+  - name: "使用者資料"
+  - name: "變更密碼"
+  - name: "解除綁定粉絲團"
+  - name: "白名單相關"
+
+paths:
+  /api/backend/homeSet/setting/getAccountName:
+    get:
+      summary: "取得使用者帳號"
+      description: "所有需要帳號的地方都可以使用"
+      operationId: "getUserAccount"
+      responses:
+        "200":
+          description: "回傳使用者帳號"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accName:
+                    type: string
+                    description: "使用者帳號"
+                    example: "michael_wang"
+                  fansName:
+                    type: string
+                    description: "粉絲團名稱"
+                    example: "能不能把粉絲團名稱抓來這裡放"
+      tags:
+        - 單獨取得帳號
+
+  /api/backend/homeSet/setting:
+    get:
+      summary: "取得使用者資料"
+      operationId: "getUserData"
+      responses:
+        "200":
+          description: "回傳使用者資料"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200Code"
+      tags:
+        - 使用者資料
+    put:
+      summary: 更新使用者資料
+      operationId: "updateUserData"
+      description: "使用者更改資料並儲存後更新使用者資料"
+      requestBody:
+        description: "傳送修改後的使用者資料"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/getUsers"
+      responses:
+        "200":
+          description: "回傳新的使用者資料"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200Code"
+        "400":
+          description: "操作失敗"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400Code"
+        "401":
+          description: "使用者未登入"
+        "402":
+          description: "系統忙碌中"
+      tags:
+        - 使用者資料
+  /api/backend/homeSet/setting/changePassword:
+    put:
+      summary: "更新使用者密碼"
+      operationId: "updateUserPassword"
+      description: "驗證舊密碼與新密碼無誤後更新使用者密碼"
+      requestBody:
+        description: "傳送輸入的舊密碼與新密碼進行驗證"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/password"
+      tags:
+        - 變更密碼
+      responses:
+        "200":
+          description: "修改成功"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    description: "狀態碼"
+                    example: 200
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "修改成功"
+        "400":
+          description: "操作錯誤"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    description: "狀態碼"
+                    example: 400
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: ""
+                  result:
+                    type: object
+        "401":
+          description: "使用者未登入"
+        "402":
+          description: "系統忙碌中"
+        "403":
+          description: "密碼輸入錯誤"
+
+  /api/backend/homeSet/setting/unboundle:
+    patch:
+      summary: "解除綁定粉絲團"
+      operationId: "updateFansName"
+      description: "解除綁定粉絲團後將粉絲團名稱修改為尚未綁定粉絲團"
+      requestBody:
+        description: "傳送 fansName = 尚未綁定粉絲團 ｜ 或是傳送使用者帳號？"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                basicSet:
+                  type: object
+                  properties:
+                    fansName:
+                      type: string
+                      example: "尚未綁定粉絲團"
+      responses:
+        "200":
+          description: "回傳新的使用者資料"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200Code"
+        "400":
+          description: "操作失敗"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400Code"
+        "401":
+          description: "使用者未登入"
+        "402":
+          description: "系統忙碌中"
+      tags:
+        - 解除綁定粉絲團
+  /api/backend/homeSet/setting/whiteList:
+    post:
+      summary: "新增白名單"
+      operationId: "addWhiteList"
+      requestBody:
+        description: "傳送使用者輸入的新增資料"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                buildTime:
+                  type: string
+                  description: "建立時間"
+                  example: "2022-01-23 10:00:51"
+                location:
+                  type: string
+                  description: "位置名稱"
+                  example: "高雄辦公室"
+                setIP:
+                  type: string
+                  description: "IP位置"
+                  example: "220.135.5.1"
+      responses:
+        "200":
+          description: "新增成功並回傳新的使用者資料"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200Code"
+        "400":
+          description: "操作失敗"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400Code"
+        "401":
+          description: "使用者未登入"
+        "402":
+          description: "系統忙碌中"
+      tags:
+        - 白名單相關
+  /api/backend/homeSet/setting/whiteList/{id}:
+    put:
+      summary: "編輯白名單"
+      operationId: "editWhiteList"
+      description: "修改指定ID的資料"
+      parameters:
+        - name: id
+          in: "path"
+          description: "使用者選擇的資料ID"
+          required: true
+          schema:
+            type: integer
+            additionalProperties: false
+      requestBody:
+        description: "使用者修改過後的資料"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                buildTime:
+                  type: string
+                  description: "建立時間"
+                  example: "2022-01-23 10:00:51"
+                location:
+                  type: string
+                  description: "位置名稱"
+                  example: "高雄辦公室"
+                setIP:
+                  type: string
+                  description: "IP位置"
+                  example: "220.135.5.1"
+      responses:
+        "200":
+          description: "新增成功並回傳新的使用者資料"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200Code"
+        "400":
+          description: "操作失敗"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400Code"
+        "401":
+          description: "使用者未登入"
+        "402":
+          description: "系統忙碌中"
+      tags:
+        - 白名單相關
+    delete:
+      summary: "刪除白名單"
+      operationId: "deleteWhiteList"
+      description: "刪除使用者選擇的ID對應資料"
+      parameters:
+        - name: id
+          in: "path"
+          description: "使用者選擇的資料ID"
+          required: true
+          schema:
+            type: integer
+            additionalProperties: false
+      responses:
+        "200":
+          description: "刪除成功並回傳新的使用者資料"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200Code"
+        "400":
+          description: "操作失敗"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400Code"
+        "401":
+          description: "使用者未登入"
+        "402":
+          description: "系統忙碌中"
+      tags:
+        - 白名單相關
+components:
+  schemas:
+    getUsers:
+      type: object
+      properties:
+        accName:
+          type: string
+          description: "使用者帳號"
+          example: "michael_wang"
+        basicSet:
+          type: object
+          description: "基本設定"
+          properties:
+            fansName:
+              type: string
+              description: 粉絲團名稱
+              example: 賣賣看
+            settingName:
+              type: string
+              description: "站台名稱"
+              example: "FB直播小幫手"
+            email:
+              type: string
+              description: "聯絡我們email"
+              example: text@gmail.com
+            currency:
+              type: string
+              description: "貨幣類別"
+              example: TWD
+            expiryDate:
+              type: string
+              description: "使用到期日"
+              example: 2021/08/09
+        communityAccount:
+          type: object
+          description: "社群帳號"
+          properties:
+            lineSubscription:
+              type: boolean
+              description: "Line＠訂閱 on/off"
+              example: false
+            email:
+              type: string
+              description: "LINE訂閱email"
+              example: "test@gmail.com"
+        subOption:
+          type: object
+          description: "訂閱項目 共九個"
+          properties:
+            start_broadcast_send:
+              type: string
+              description: "開播通知"
+              example: "1"
+            bid_send:
+              type: string
+              description: "得標通知"
+              example: "1"
+            checkout_send:
+              type: string
+              description: "結帳通知"
+              example: "1"
+            pre_order_arrival_send:
+              type: string
+              description: "預購到貨通知"
+              example: "1"
+            s2s_shipment_status_send:
+              type: string
+              description: "店到店通知"
+              example: "1"
+            shipment_status_send:
+              type: string
+              description: "出貨通知"
+              example: "1"
+            fb_group_in_order_send:
+              type: string
+              description: "社團入單通知"
+              example: "1"
+            fb_fans_page_acquiring_send:
+              type: string
+              description: "粉絲團收單通知"
+              example: "1"
+            pay_send:
+              type: string
+              description: "付款提醒通知"
+              example: "1"
+        remindPeriod:
+          type: string
+          description: "Line付款提醒通知時段 如果時間是固定的 可以改成選項的方式"
+          example: "17:00 - 18:00"
+        onlyCashFlow:
+          type: string
+          description: "僅發送使用金流的訂單 1:on / 0:off"
+          example: "1"
+        serviceLink:
+          type: boolean
+          description: "Line客服底部連結 on/off"
+          example: true
+        liveNotice:
+          type: object
+          description: "直播通知開關及內文設定"
+          properties:
+            status:
+              type: boolean
+              description: "直播通知 on/off"
+              example: true
+            content:
+              type: string
+              description: "直播通知內文設定"
+              example: "今晚八點準時開賣"
+        getBidMessage:
+          type: string
+          description: "得標訊息通知 每一標得標發送：single，統一發送：centralized （若選項為固定可改成1 2）"
+          example: "centralized"
+        checkOutKeyword:
+          type: string
+          description: 結帳連結關鍵字設定
+          example: "喊我結帳"
+        security:
+          type: object
+          description: "安全性設定"
+          properties:
+            whiteList:
+              type: boolean
+              description: "白名單 on/off"
+              example: true
+            whiteData:
+              type: array
+              description: "白名單資料"
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    example: 1
+                  buildTime:
+                    type: string
+                    description: "建立時間"
+                    example: "2022-01-23 10:00:51"
+                  location:
+                    type: string
+                    description: "位置名稱"
+                    example: "高雄辦公室"
+                  setIP:
+                    type: string
+                    description: "IP位置"
+                    example: "220.135.5.1"
+    password:
+      type: object
+      description: "使用者輸入的舊密碼與新密碼"
+      properties:
+        ori_password:
+          type: string
+          description: "舊密碼"
+          example: "test01"
+        new_password:
+          type: string
+          description: "新密碼（第一次）"
+          example: "test1234"
+        check_new:
+          type: string
+          description: "新密碼（第二次）"
+          example: "test1234"
+    200Code:
+      type: object
+      description: "狀態碼200並重新取得使用者資料"
+      properties:
+        code:
+          type: number
+          description: "狀態碼"
+          example: 200
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: ""
+        result:
+          $ref: "#/components/schemas/getUsers"
+    400Code:
+      description: "狀態碼400並回傳 false"
+      type: object
+      properties:
+        code:
+          type: number
+          description: "狀態碼"
+          example: 400
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: ""
+        result:
+          type: object

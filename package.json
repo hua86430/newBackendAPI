@@ -1,0 +1,32 @@
+{
+  "name": "apipractice",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "babel-node ./bin/www",
+    "w": "nodemon babel-node ./bin/www"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "body-parser": "^1.19.2",
+    "cookie-parser": "~1.4.4",
+    "cors": "2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.0",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "fs": "^0.0.1-security",
+    "heroku": "^7.59.3",
+    "http-errors": "~1.6.3",
+    "js-yaml": "^4.1.0",
+    "morgan": "~1.9.1",
+    "mysql2": "^2.3.3",
+    "node-gyp": "9.0.0",
+    "node-pre-gyp": "0.17.0",
+    "nodemon": "^2.0.15",
+    "npm": "^8.5.3",
+    "swagger-ui-express": "^4.3.0",
+    "yamljs": "^0.3.0"
+  }
+}

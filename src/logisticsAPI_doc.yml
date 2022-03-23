@@ -1,0 +1,525 @@
+openapi: 3.0.0
+info:
+  title: "logistics Page API"
+  description: "物流設定  API"
+  version: "1.0.0"
+tags:
+  - name: 使用者資料
+
+paths:
+  /api/backend/homeSet/logistics:
+    get:
+      summary: "取得使用者資料"
+      description: "取得所有使用者資料"
+      operationId: "getLogisticsData"
+      responses:
+        "200":
+          description: "回傳使用者設定"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200Code"
+        "400":
+          description: "回傳失敗訊息訊息"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400CodeWithoutData"
+        "401":
+          description: 使用者未登入
+        "402":
+          description: 系統忙碌中
+      tags:
+        - 使用者資料
+  /api/backend/homeSet/logistics/{type}:
+    put:
+      summary: "更新指定 type 的物流設定"
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: integer
+            additionalProperties: false
+      requestBody:
+        description: "使用者送出的資料（型別為對應 type 的單一物件)"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/dataContent"
+      responses:
+        "200":
+          description: "回傳成功訊息"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200CodeWithoutData"
+        "400":
+          description: "回傳失敗訊息訊息"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400CodeWithoutData"
+        "401":
+          description: 使用者未登入
+        "402":
+          description: 系統忙碌中
+      tags:
+        - 使用者資料
+  /api/backend/homeSet/logistics/freeShipment:
+    put:
+      summary: "修改免運金額"
+      requestBody:
+        description: "使用者修改免運金額"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                freeShipment:
+                  type: number
+                  example: 999999
+      tags:
+        - 使用者資料
+components:
+  schemas:
+    getData:
+      type: object
+      description: "使用者全部資料"
+      properties:
+        freeShipment:
+          type: number
+          description: "免運金額"
+          example: 3000
+        changeKey:
+          type: object
+          description: "使用者擁有的代客設定碼"
+          properties:
+            hct:
+              type: array
+              items:
+                type: string
+              example:
+                - "1111"
+                - "2222"
+            kerry:
+              type: array
+              items:
+                type: string
+              example:
+                - "1111"
+                - "2222"
+            fse:
+              type: array
+              items:
+                type: string
+              example:
+                - "1111"
+                - "2222"
+        logisticsList:
+          $ref: "#/components/schemas/dataContent"
+    dataType:
+      type: object
+      properties:
+        mainIsland:
+          type: object
+          description: "本島運費設定"
+          properties:
+            onoff:
+              type: string
+              description: "1=on 0=off"
+              example: "1"
+            price:
+              type: string
+              description: "運費"
+        outlyingIslands:
+          type: object
+          description: "外島運費設定"
+          properties:
+            onoff:
+              type: string
+              description: "1=on 0=off"
+              example: "1"
+            price:
+              type: string
+              description: "運費"
+        cod:
+          type: object
+          description: "貨到付款運費設定"
+          properties:
+            onoff:
+              type: string
+              description: "1=on 0=off"
+              example: "1"
+            price:
+              type: string
+              description: "運費"
+        changeKey:
+          type: object
+          description: "此物流的代客設定碼"
+          properties:
+            hctKey:
+              type: string
+              description: "新竹物流"
+              example: "1234"
+            kerryKey:
+              type: string
+              description: "嘉里大榮"
+              example: "1234"
+            fseKey:
+              type: string
+              description: "全速配"
+              example: "1234"
+        printMode:
+          type: object
+          description: "此物流的列印方式 1=A4 2=單張列印 3=宅配單+出貨單"
+          properties:
+            hct:
+              type: string
+              description: "新竹物流宅配單"
+              example: "1"
+            kerry:
+              type: string
+              description: "嘉里大榮宅配單"
+              example: "1"
+            kerryExpress:
+              type: string
+              description: "嘉里快遞宅配單"
+              example: "1"
+            fse:
+              type: string
+              description: "全速配宅配單"
+              example: "1"
+        shopNameList:
+          type: object
+          description: "店到店選擇開啟的超商 1=on 0=off"
+          properties:
+            7-11:
+              type: string
+              description: "7-11"
+              example: "1"
+            family:
+              type: string
+              description: "全家"
+              example: "1"
+            HiLife:
+              type: string
+              description: "萊爾富"
+              example: "1"
+        shipmentPrice:
+          type: number
+          description: "機車快遞運費"
+          example: 999999999
+        malaysia:
+          type: object
+          description: "馬來西亞跨境運費"
+          properties:
+            onoff:
+              type: string
+              description: "1=on 0=off"
+              example: "1"
+            eastPrice:
+              type: string
+              description: "東馬來西亞運費"
+              example: "99999"
+            westPrice:
+              type: string
+              description: "西馬來西亞運費"
+              example: "99999"
+        singapore:
+          type: object
+          description: "新加坡運費設定"
+          properties:
+            onoff:
+              type: string
+              description: "1=on 0=off"
+              example: "1"
+            price:
+              type: string
+              description: "運費"
+              example: "99999"
+        hongkong:
+          type: object
+          description: "香港運費設定"
+          properties:
+            onoff:
+              type: string
+              description: "1=on 0=off"
+              example: "1"
+            price:
+              type: string
+              description: "運費"
+              example: "99999"
+        merchantTel:
+          type: string
+          description: "商家電話"
+          example: "07-654321"
+        merchantAddress:
+          type: string
+          description: "商家地址"
+          example: "高雄市中山二路2號"
+        shipmentList:
+          type: array
+          description: "（外島）跨境物流設定"
+          items:
+            type: object
+            properties:
+              firstGram:
+                type: number
+                description: "重量（起始）"
+                example: 100
+              secondGram:
+                type: number
+                description: "重量（結束）"
+                example: 200
+              rmPrice:
+                type: number
+                description: "運費"
+                example: 300
+    dataContent:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+            description: "物流種類"
+            example: "normalTemp"
+          isCross:
+            type: boolean
+            description: "此物流種類是否為跨境物流（不會更動），只有 type=eastMalaysiaForCross,westMalaysiaForCross,singaporeForCross 為 true"
+            example: false
+          permission:
+            type: boolean
+            description: "權限"
+            example: true
+          onoff:
+            type: boolean
+            description: "開啟狀態"
+            example: true
+          setData:
+            $ref: "#/components/schemas/dataType"
+      example:
+        - type: "normalTemp"
+          isCross: false
+          permission: true
+          onoff: true
+          setData:
+            mainIsland:
+              onoff: "1"
+              price: "1111"
+            outlyingIslands:
+              onoff: "1"
+              price: "1111"
+            cod:
+              onoff: "1"
+              price: "1111"
+            changeKey:
+              hctKey: "1111111"
+              kerryKey: "1222222"
+              fseKey: "13333333"
+            printMode:
+              hct: "1"
+              kerry: "1"
+              kerryExpress: "1"
+              fse: "1"
+        - type: "lowTemp"
+          isCross: false
+          permission: true
+          onoff: true
+          setData:
+            mainIsland:
+              onoff: "1"
+              price: "1111"
+            outlyingIslands:
+              onoff: "1"
+              price: "1111"
+            cod:
+              onoff: "1"
+              price: "1111"
+            changeKey:
+              hctKey: "1111111"
+              kerryKey: "1222222"
+              fseKey: "13333333"
+            printMode:
+              hct: "1"
+              kerry: "1"
+              kerryExpress: "1"
+              fse: "1"
+        - type: "normalShopToShop"
+          isCross: false
+          permission: true
+          onoff: true
+          setData:
+            mainIsland:
+              onoff: "1"
+              price: "1111"
+            outlyingIslands:
+              onoff: "1"
+              price: "1111"
+            cod:
+              onoff: "1"
+              price: "1111"
+            printMode:
+              hct: "1"
+              kerry: "1"
+              kerryExpress: "1"
+              fse: "1"
+            shopNameList:
+              sevenC2C: "1"
+              sevenB2C: "1"
+              family: "1"
+        - type: "lowShopToShop"
+          isCross: false
+          permission: true
+          onoff: true
+          setData:
+            mainIsland:
+              onoff: "1"
+              price: "1111"
+            outlyingIslands:
+              onoff: "1"
+              price: "1111"
+            cod:
+              onoff: "1"
+              price: "1111"
+            printMode:
+              hct: "1"
+              kerry: "1"
+              kerryExpress: "1"
+              fse: "1"
+            shopNameList:
+              sevenC2C: "1"
+              sevenB2C: "1"
+              family: "1"
+        - type: "motorExpress"
+          isCross: false
+          permission: true
+          onoff: true
+          setData:
+            shipmentPrice: 9999999999
+        - type: "crossDelivery"
+          isCross: false
+          permission: true
+          onoff: true
+          setData:
+            malaysia:
+              onoff: "1"
+              eastPrice: "1111"
+              westPrice: "1111"
+            singapore:
+              onoff: "1"
+              price: "1111"
+            hongkong:
+              onoff: "1"
+              price: "1111"
+        - type: "crossStore"
+          isCross: false
+          permission: true
+          onoff: true
+          setData:
+            malaysia:
+              onoff: "1"
+              eastPrice: "1111"
+              westPrice: "1111"
+            singapore:
+              onoff: "1"
+              price: "1111"
+            hongkong:
+              onoff: "1"
+              price: "1111"
+        - type: "selfPick"
+          isCross: false
+          permission: true
+          onoff: true
+          setData:
+            merchantTel: "07-654321"
+            merchantAddress: "高雄市中山二路2號"
+        - type: "eastMalaysiaForCross"
+          isCross: true
+          permission: true
+          onoff: true
+          setData:
+            shipmentList:
+              - firstGram: 111111
+                secondGram: 111111
+                rmPrice: 111111
+                id: 1
+              - firstGram: 222222
+                secondGram: 222222
+                rmPrice: 222222
+                id: 2
+        - type: "westMalaysiaForCross"
+          isCross: true
+          permission: true
+          onoff: true
+          setData:
+            shipmentList:
+              - firstGram: 111111
+                secondGram: 111111
+                rmPrice: 111111
+                id: 1
+              - firstGram: 222222
+                secondGram: 222222
+                rmPrice: 222222
+                id: 2
+        - type: "singaporeForCross"
+          isCross: true
+          permission: true
+          onoff: true
+          setData:
+            shipmentList:
+              - firstGram: 111111
+                secondGram: 111111
+                rmPrice: 111111
+                id: 1
+              - firstGram: 222222
+                secondGram: 222222
+                rmPrice: 222222
+                id: 2
+    ###############################
+    200Code:
+      type: object
+      properties:
+        code:
+          type: number
+          description: "狀態碼"
+          example: 200
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: ""
+        result:
+          $ref: "#/components/schemas/getData"
+    200CodeWithoutData:
+      type: object
+      properties:
+        code:
+          type: number
+          description: "狀態碼"
+          example: 200
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: ""
+        result:
+          type: object
+    400CodeWithoutData:
+      type: object
+      properties:
+        code:
+          type: number
+          description: "狀態碼"
+          example: 400
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: ""
+        result:
+          type: object

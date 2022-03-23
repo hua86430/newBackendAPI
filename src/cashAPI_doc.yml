@@ -1,0 +1,395 @@
+openapi: 3.0.0
+info:
+  title: Cash Page API
+  description: 金流設定 API
+  version: 1.0.0
+tags:
+  - name: 使用者資料
+paths:
+  /api/backend/homeSet/cash:
+    get:
+      summary: 取得使用者設定
+      description: 取得各項金流設定
+      operationId: getCashSet
+      responses:
+        "200":
+          description: 回傳使用者設定
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200CodeForCash"
+        "400":
+          description: 操作失敗
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400Code"
+        "401":
+          description: 使用者未登入
+        "402":
+          description: 系統忙碌中
+      tags:
+        - 使用者資料
+  /api/backend/homeSet/cash/{id}:
+    put:
+      summary: 更新對應ID的金流選項設定
+      description: 依照對應的ID修改使用者送出的資料
+      operationId: updateCashSet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            additionalProperties: false
+      requestBody:
+        description: 使用者送出的資料
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/cashDataType"
+      responses:
+        "200":
+          description: 回傳使用者設定
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200CodeForCash"
+        "400":
+          description: 操作失敗
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400Code"
+        "401":
+          description: 使用者未登入
+        "402":
+          description: 系統忙碌中
+      tags:
+        - 使用者資料
+  /api/backend/homeSet/cash/key:
+    get:
+      summary: 使用者金鑰資料
+      description: 發出請求返回新的使用者資料
+      operationId: getKeyData
+      responses:
+        "200":
+          description: 回傳使用者金鑰資料
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200CodeForKey"
+        "401":
+          description: 使用者未登入
+        "402":
+          description: 系統忙碌中
+      tags:
+        - 使用者資料
+    put:
+      summary: 更新使用者資料
+      description: 傳送需變更的資料並回傳結果
+      operationId: updateKeyData
+      requestBody:
+        description: 使用者送出的資料
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                MerchantID:
+                  type: string
+                  example: FBB160032132111
+                HashKey:
+                  type: string
+                  example: MSTvGmmNPl8Xf2we4aKDpiyMEGsOtRGf
+                HashIV:
+                  type: string
+                  example: PQOMMW7HoxxYsbC
+      responses:
+        "200":
+          description: 回傳成功訊息
+        "400":
+          description: 操作失敗
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400Code"
+        "401":
+          description: 使用者未登入
+        "402":
+          description: 系統忙碌中
+      tags:
+        - 使用者資料
+components:
+  schemas:
+    getData:
+      type: object
+      description: 全部使用者設定
+      properties:
+        paymentList:
+          type: array
+          description: 各項金流設定 共十個
+          items:
+            $ref: "#/components/schemas/cashDataType"
+          example:
+            - id: 1
+              type: creditCard
+              permission: true
+              onoff: true
+              charge: "2"
+            - id: 2
+              type: atm
+              permission: true
+              onoff: true
+            - id: 3
+              type: convenience
+              permission: true
+              onoff: true
+              charge: "1.5"
+            - id: 4
+              type: transfer
+              permission: true
+              onoff: true
+              accountNum: 123456789
+              accountName: 賣賣看銀行帳戶
+              code: "812"
+            - id: 5
+              type: linePay
+              permission: true
+              onoff: true
+              channelID: put channelID in here
+              channelSecretKey: put channelSecretKey in here
+              charge: "1.5"
+            - id: 6
+              type: cod
+              permission: true
+              onoff: true
+            - id: 7
+              type: selfPick
+              permission: true
+              onoff: true
+              merchantTel: 07-1235678
+              merchantAddress: 高雄市中山二路2號
+            - id: 8
+              type: molpay
+              permission: true
+              onoff: true
+              option:
+                Molpay FPX: "1"
+                Molpay 7-11 Cash: "1"
+                Molpay BOOST: "1"
+                Molpay Credit Card: "1"
+            - id: 9
+              type: ipay
+              permission: true
+              onoff: true
+              option:
+                IPay88 Credit Card: "1"
+                IPay88 Maybank2U: "1"
+                IPay88 Alliance Online Transfer: "1"
+                IPay88 AmBank: "1"
+                IPay88 RHB: "1"
+                IPay88 Hong Leong Bank Transfer: "1"
+                IPay88 CIMB Clicks: "1"
+                IPay88 Bank Online: "1"
+                IPay88 Bank Rakyat Internet Banking: "1"
+                IPay88 Affin Online: "1"
+                IPay88 BSN Online: "1"
+                IPay88 Bank Islam: "1"
+                IPay88 UOB: "1"
+                IPay88 Bank Muamalat: "1"
+                IPay88 OCBC: "1"
+                IPay88 Standard Chartered Bank: "1"
+                IPay88 HSBC Online Banking: "1"
+                IPay88 Kuwait Finance House: "1"
+                IPay88 Boost Wallet: "1"
+                IPay88 FPX: "1"
+
+            - id: 10
+              type: fasney
+              permission: true
+              onoff: true
+              storeId: "1947664517"
+              apiKey: uZEsv5EqpUuezq9WpKWR8hdxCBvGkZeT
+              apiSecret: 72J4vwaoDgbZSQpjREu0jSOcBkXmcy87uFcRDkrdU
+    200CodeForCash:
+      type: object
+      properties:
+        code:
+          type: number
+          description: 狀態碼
+          example: 200
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: ""
+        result:
+          $ref: "#/components/schemas/getData"
+    400Code:
+      type: object
+      properties:
+        code:
+          type: number
+          description: 狀態碼
+          example: 400
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: ""
+        result:
+          type: object
+    cashDataType:
+      type: object
+      properties:
+        Utilities:
+          type: object
+          description: 通用屬性
+          properties:
+            type:
+              type: string
+              description: 支付方式種類
+            permission:
+              type: string
+              description: 權限
+            onoff:
+              type: string
+              description: 開關
+        creditCard:
+          type: object
+          description: 線上信用卡
+          properties:
+            charge:
+              type: number
+              description: 交易處理費
+        atm:
+          type: object
+          description: 超商代碼繳費
+          properties:
+            charge:
+              type: number
+              description: 交易處理費
+        convenience:
+          type: object
+          description: 超商代碼繳費
+          properties:
+            charge:
+              type: number
+              description: 交易處理費
+        transfer:
+          type: object
+          description: 轉帳匯款
+          properties:
+            accountNum:
+              type: number
+              description: 帳戶號碼
+            accountName:
+              type: string
+              description: 帳戶名稱
+            code:
+              type: string
+              description: 銀行代碼
+        linePay:
+          type: object
+          description: LinePay
+          properties:
+            channelID:
+              type: string
+              description: Line channelID
+            channelSecretKey:
+              type: string
+              description: Line channelSecretKey
+            charge:
+              type: number
+              description: 交易處理費
+        selfPick:
+          type: object
+          description: 自取付款
+          properties:
+            merchantTel:
+              type: string
+              description: 商家電話
+            merchantAddress:
+              type: string
+              description: 商家地址
+        molpay-AND-Ipay:
+          type: object
+          description: molpay 和 Ipay 的一樣
+          properties:
+            option:
+              type: object
+              description: 付款選項
+              properties:
+                typeName:
+                  type: string
+                  example: "1=on 0=off"
+        fasney:
+          type: object
+          description: fasney支付
+          properties:
+            storeId:
+              type: string
+              description: store ID
+            apiKey:
+              type: string
+              description: API KEY
+            apiSecret:
+              type: string
+              description: API Secret
+    keyDataType:
+      type: object
+      properties:
+        selectIndex:
+          type: string
+          description: 已選擇的金鑰索引值
+          example: "2"
+        selectKeyData:
+          type: object
+          description: 已選擇的金鑰資料
+          properties:
+            MerchantID:
+              type: string
+              example: FBB160032132111
+            HashKey:
+              type: string
+              example: MSTvGmmNPl8Xf2we4aKDpiyMEGsOtRGf
+            HashIV:
+              type: string
+              example: PQOMMW7HoxxYsbC
+        list:
+          type: array
+          description: 使用者所有的金鑰資訊
+          items:
+            type: object
+            properties:
+              MerchantID:
+                type: string
+              HashKey:
+                type: string
+              HashIV:
+                type: string
+          example:
+            - MerchantID: FBB160032132111
+              HashKey: MSTvGmmNPl8Xf2we4aKDpiyMEGsOtRGf
+              HashIV: PQOMMW7HoxxYsbC
+            - MerchantID: FBB160032132111
+              HashKey: MSTvGmmNPl8Xf2we4aKDpiyMEGsOtRGf
+              HashIV: PQOMMW7HoxxYsbC
+    200CodeForKey:
+      type: object
+      properties:
+        code:
+          type: number
+          description: 狀態碼
+          example: 200
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: ""
+        result:
+          $ref: "#/components/schemas/keyDataType"

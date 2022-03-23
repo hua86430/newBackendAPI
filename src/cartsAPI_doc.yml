@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  title: Carts Page API
+  description: 購物設定 API
+  version: 1.0.0
+tags:
+  - name: 使用者資料
+paths:
+  /api/backend/homeSet/carts:
+    get:
+      summary: 取得使用者資料
+      description: 取得使用者所有資料
+      operationId: getCartsSet
+      responses:
+        "200":
+          description: 回傳使用者資料
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    description: 狀態碼
+                    example: 200
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: ""
+                  result:
+                    $ref: "#/components/schemas/getData"
+        "400":
+          description: 操作失敗
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    description: 狀態碼
+                    example: 400
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: ""
+                  result:
+                    type: object
+        "401":
+          description: 使用者未登入
+        "402":
+          description: 系統忙碌中
+      tags:
+        - 使用者資料
+components:
+  schemas:
+    getData:
+      type: object
+      description: 使用者資料
+      properties:
+        pickMode:
+          type: string
+          description: 收單模式 1=單標 2=單標多規格 3=多標
+          example: "1"
+        modeNum:
+          type: number
+          description: 多標模式收單數量
+          example: 10
+        payMode:
+          type: string
+          description: 購物車結帳模式 1=預設模式 2=自選結帳模式 3=棄標模式 4=暫停結帳模式
+          example: "1"
+        modeOnoff:
+          type: object
+          description: 選項開關
+          properties:
+            stock:
+              type: boolean
+              description: 庫存模式
+              example: true
+            multiCarts:
+              type: boolean
+              description: 多購物車模式
+              example: true
+            addOn:
+              type: boolean
+              description: 加購商品
+              example: true

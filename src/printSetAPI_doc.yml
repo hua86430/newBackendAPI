@@ -1,0 +1,147 @@
+openapi: 3.0.0
+info:
+  title: "printSet Page API"
+  description: "列印設定 API"
+  version: "1.0.0"
+tags:
+  - name: 使用者資料
+paths:
+  /api/backend/homeSet/printSet:
+    get:
+      summary: "使用者資料"
+      description: "取得使用者個人資料"
+      operationId: "getPrintSet"
+      responses:
+        "200":
+          description: "回傳使用者資料"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    description: "狀態碼"
+                    example: 200
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: ""
+                  result:
+                    $ref: "#/components/schemas/allData"
+        "400":
+          description: "操作錯誤"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    description: "狀態碼"
+                    example: 400
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: ""
+                  result:
+                    type: object
+        "401":
+          description: "使用者未登入"
+        "402":
+          description: "系統忙碌中"
+      tags:
+        - "使用者資料"
+    put:
+      summary: "更新資料"
+      description: "更新使用者資料並返回結果"
+      operationId: "updatePrintSet"
+      requestBody:
+        description: "傳送使用者修改的資料"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/allData"
+      responses:
+        "200":
+          description: "修改成功"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    description: "狀態碼"
+                    example: 200
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: ""
+                  result:
+                    type: object
+        "400":
+          description: "操作錯誤"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: number
+                    description: "狀態碼"
+                    example: 400
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: ""
+                  result:
+                    type: object
+        "401":
+          description: "使用者未登入"
+        "402":
+          description: "系統忙碌中"
+      tags:
+        - "使用者資料"
+
+components:
+  schemas:
+    allData:
+      type: object
+      properties:
+        shipperStyle:
+          type: string
+          description: "出貨單樣式 樣式1~3"
+          example: "1"
+        shipperType:
+          type: string
+          description: "出貨單紙張設定 A4 & Label"
+          example: "A4"
+        disNone:
+          type: string
+          description: "不顯示電話號碼 1=on 2=off"
+          example: "1"
+        sessionSort:
+          type: string
+          description: "場次排序 2=新到舊 3=舊到新"
+          example: "2"
+        timeSort:
+          type: string
+          description: "時間排序 2=舊到新 3=新到舊"
+          example: "2"
+        shipperSet:
+          type: string
+          description: "得標單列印設定 1=個別設定 2=統一設定"
+          example: "1"
+        auto:
+          type: string
+          description: "自動裁紙 1=on 2=off"
+          example: "1"

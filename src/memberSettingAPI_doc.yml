@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  title: "member Setting Page API"
+  description: "會員設定 API"
+  version: "1.0.0"
+tags:
+  - name: 使用者資料
+
+paths:
+  /api/backend/homeSet/memberSetting:
+    get:
+      summary: "取得使用者資料"
+      operationId: "getUserData"
+      responses:
+        "200":
+          description: "回傳使用者資料"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200Code"
+        "400":
+          description: "操作失敗"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400Code"
+        "401":
+          description: "使用者未登入"
+        "402":
+          description: "系統忙碌中"
+      tags:
+        - 使用者資料
+    put:
+      summary: "更新使用者資料"
+      operationId: "updateUserData"
+      requestBody:
+        description: "傳送修改後的使用者資料"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/getData"
+      responses:
+        "200":
+          description: "回傳新的使用者資料"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/200Code"
+        "400":
+          description: "操作失敗"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/400Code"
+        "401":
+          description: "使用者未登入"
+        "402":
+          description: "系統忙碌中"
+      tags:
+        - 使用者資料
+components:
+  schemas:
+    getData:
+      type: object
+      properties:
+        bonusSet:
+          type: object
+          description: "購物紅利設定"
+          properties:
+            bonusFeature:
+              type: boolean
+              description: "紅利金功能 on/off"
+              example: false
+            delivery:
+              type: number
+              description: "消費滿額贈送 value"
+              example: 168168168
+            filled:
+              type: number
+              description: "消費滿多少可使用 value"
+              example: 168168168
+            bonusLimit:
+              type: number
+              description: "紅利金使用上限 value"
+              example: 168168168
+            bonusDiscount:
+              type: boolean
+              description: "紅利金折抵運費 on/off"
+              example: false
+        startSet:
+          type: object
+          description: "會員星等設定"
+          properties:
+            startAreaSet:
+              type: string
+              description: "星等評鑑顯示區域設定 on/off"
+              example: "1"
+            startLevel:
+              type: string
+              description: "分享關鍵字抽獎星等設定 on/off"
+              example: "1"
+            includeNew:
+              type: string
+              description: "包含新客 on/off"
+              example: "1"
+    200Code:
+      description: "狀態碼200並回傳新的使用者資料"
+      type: object
+      properties:
+        code:
+          type: number
+          description: "狀態碼"
+          example: 200
+        status:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: ""
+        result:
+          $ref: "#/components/schemas/getData"
+    400Code:
+      description: "狀態碼400"
+      type: object
+      properties:
+        code:
+          type: number
+          description: "狀態碼"
+          example: 400
+        status:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: ""
+        result:
+          type: object
