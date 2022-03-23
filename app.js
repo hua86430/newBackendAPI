@@ -24,7 +24,7 @@ const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 var doc = YAML.load('./src/logisticsAPI_doc.yml')
 
-// app.use('/dev', swaggerUi.serve,swaggerUi.setup(doc));
+app.use('/dev', swaggerUi.serve,swaggerUi.setup(doc));
 /*********** swagger UI Develop ***********/
 
 
