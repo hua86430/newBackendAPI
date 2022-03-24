@@ -8,7 +8,6 @@ var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
 var devRouter = require('./routes/dev');
 
-
 var app = express();
 var cors = require('cors');
 const corsOptions = {
@@ -22,11 +21,10 @@ app.use(cors(corsOptions));
 /*********** swagger UI Develop ***********/
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
-var doc = YAML.load('./src/logisticsAPI_doc.yml')
+var doc = YAML.load('./src/logisticsAPI_doc.yml');
 
-app.use('/devAPI', swaggerUi.serve,swaggerUi.setup(doc));
+app.use('/devAPI', swaggerUi.serve, swaggerUi.setup(doc));
 /*********** swagger UI Develop ***********/
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
