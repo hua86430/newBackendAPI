@@ -34,15 +34,18 @@ router.post('/category/update', (req, res, next) => {
 
 router.delete('/category/:id', (req, res) => {
   let id = req.params.id;
-  db.execute(`DELETE FROM \`api\`.\`categoryPage\` WHERE id=${id}`).then(() => {
-    getData(req, res);
-  });
+  if (id == 'delAll') {
+    db.execute('TRUNCATE TABLE `api`.`categoryPage`;').then(() => {
+      getData(req, res);
+    });
+  } else {
+    db.execute(`DELETE FROM \`api\`.\`categoryPage\` WHERE id=${id}`).then(
+      () => {
+        getData(req, res);
+      }
+    );
+  }
 });
-console.log('test');
-router.delete('/category/delAll', (req, res, next) => {
-  db.execute('TRUNCATE TABLE `api`.`categoryPage`;').then(() => {
-    getData(req, res);
-  });
-});
+
 /*-----------------------  category Page -----------------------*/
 module.exports = router;
