@@ -38,7 +38,7 @@ router.delete('/category/:id', (req, res) => {
     getData(req, res);
   });
 });
-
+console.log('test');
 router.delete('/category/delAll', (req, res, next) => {
   db.execute('TRUNCATE TABLE `api`.`categoryPage`;').then(() => {
     getData(req, res);
