@@ -7,14 +7,16 @@ var bodyParser = require('body-parser');
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
 var devRouter = require('./routes/dev');
+var login = require('./routes/login');
+var register = require('./routes/register');
 
 var app = express();
 var cors = require('cors');
 const corsOptions = {
-  origin: ['https://www.example.com', 'https://localhost:3000'],
+  origin: ['https://www.example.com', 'https://localhost:3000', 'http://localhost:3000'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   allowedHeaders: ['Content-Type', '*'],
-  optionsSuccessStatus: 200,
+  optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
 
@@ -40,6 +42,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 app.use('/dev', devRouter);
+app.use('/login', login);
+app.use('/register', register);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
