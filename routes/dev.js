@@ -4,13 +4,14 @@ var router = express.Router();
 
 /*-----------------------  category Page -----------------------*/
 const getData = (req, res) => {
-  db.execute('SELECT * FROM `api`.`categoryPage`').then((data) => {
+  db.query('SELECT * FROM `api`.`categoryPage`',(err,rows)=>{
+    if(err) throw err;
     res.send({
       success: true,
       code: 200,
-      data: data[0],
+      data:rows,
     });
-  });
+  })
 };
 
 router.get('/category', (req, res, next) => {
@@ -19,31 +20,25 @@ router.get('/category', (req, res, next) => {
 
 router.post('/category/update', (req, res, next) => {
   const data = req.body;
-  db.execute(
-    'INSERT INTO `api`.`categoryPage` (fileName,imageUrl,name) VALUES (?,?,?)',
-    [data.fileName, data.imgUrl, data.category]
-  )
-    .then(() => {
+  db.query(
+    'INSERT INTO `api`.`categoryPage` SET ?', data , (err,rows)=>{
+      if(err) throw err
       getData(req, res);
-      // getData(req, res);
     })
-    .catch((err) => {
-      res.send(err);
-    });
 });
 
 router.delete('/category/:id', (req, res) => {
   let id = req.params.id;
   if (id == 'delAll') {
-    db.execute('TRUNCATE TABLE `api`.`categoryPage`;').then(() => {
+    db.query('TRUNCATE TABLE `api`.`categoryPage`;',(err,rows)=>{
+      if (err) throw err
       getData(req, res);
-    });
+    })
   } else {
-    db.execute(`DELETE FROM \`api\`.\`categoryPage\` WHERE id=${id}`).then(
-      () => {
-        getData(req, res);
-      }
-    );
+    db.query(`DELETE FROM \`api\`.\`categoryPage\` WHERE id=${id}`,(err,rows)=>{
+      if(err) throw err
+      getData(req, res);
+    })
   }
 });
 
