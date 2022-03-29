@@ -39,19 +39,13 @@ router.use('/', swaggerUi.serve, (req, res) => {
 // router.use('/', swaggerUi.serve, swaggerUi.setup(null,options)) // swagger UI
 // swagger
 
-router.post('/', (req, res, next) => {
+router.post('/test', (req, res, next) => {
   const data = req.body;
-  db.execute('INSERT INTO `api`.`invoice` (name,price) VALUES (?,?)', [
-    data.name,
-    data.price,
-  ])
-    .then((data) => {
-      res.send(data[0]);
-      // getData(req, res);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
+  console.log(data);
+  // db.query('INSERT INTO `api`.`invoice` SET ?',data,(err,rows)=>{
+  //   if(err) throw err;
+  //   console.log(rows);
+  // })
 });
 
 router.patch('/', (req, res, next) => {

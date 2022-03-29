@@ -28,7 +28,7 @@ router.post('/new', (req, res) => {
     account: req.body.account,
     email: req.body.email,
     password: password,
-    createAt: getTime()
+    createAt: getTime('haveSec')
   };
 
   postData(newData)

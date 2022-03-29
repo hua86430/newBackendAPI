@@ -1,18 +1,46 @@
-function getTime(){
+function getDate(secNone) {
   const date = new Date();
-  const mm = date.getMonth() + 1;
-  const dd = date.getDate();
-  const hh = date.getHours();
-  const mi = date.getMinutes();
-  const ss = date.getSeconds();
+  let nowTime = '';
+  let [year, month, nowDate, hours, minutes, seconds] = [
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+    date.getHours(),
+    date.getMinutes(),
+    date.getSeconds()
+  ];
+  if (year < 10) {
+    year = `0${year}`;
+  }
+  if (month < 10) {
+    month = `0${month}`;
+  }
+  if (nowDate < 10) {
+    nowDate = `0${nowDate}`;
+  }
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  if (seconds < 10) {
+    seconds = `0${seconds}`;
+  }
 
-  return [date.getFullYear(), "-" +
-      (mm > 9 ? '' : '0') + mm, "-" +
-      (dd > 9 ? '' : '0') + dd, " " +
-      (hh > 9 ? '' : '0') + hh, ":" +
-      (mi > 9 ? '' : '0') + mi, ":" +
-      (ss > 9 ? '' : '0') + ss
-  ].join('');
+  switch (true) {
+    case secNone === 'haveSec':
+      nowTime = `${year}/${month}/${nowDate} ${hours}:${minutes}:${seconds}`;
+      break;
+    case secNone === 'noneSec':
+      nowTime = `${year}/${month}/${nowDate} ${hours}:${minutes}`;
+      break;
+
+    case secNone === 'justDate':
+      nowTime = `${year}/${month}/${nowDate}`;
+      break;
+  }
+  return nowTime;
 }
 
-module.exports = getTime
+module.exports = getDate;
