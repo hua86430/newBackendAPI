@@ -73,9 +73,9 @@ const dataField = data => {
         schedule: item.schedule
       },
       choose: {
-        showStock: item.showStock,
-        InventoryDeduct: item.InventoryDeduct,
-        limit_enable: item.limit_enable
+        showStock: item.showStock == 1 ? true : false,
+        InventoryDeduct: item.InventoryDeduct == 1 ? true : false,
+        limit_enable: item.limit_enable == 1 ? true : false
       },
       quantity: {
         ori_price: item.ori_price,
@@ -108,9 +108,9 @@ const originType = q => {
     start: q.date.start,
     end: q.date.end,
     schedule: q.date.schedule,
-    showStock: q.choose.showStock,
-    InventoryDeduct: q.choose.InventoryDeduct,
-    limit_enable: q.choose.limit_enable,
+    showStock: q.choose.showStock == true ? 1 : 0,
+    InventoryDeduct: q.choose.InventoryDeduct == true ? 1 : 0,
+    limit_enable: q.choose.limit_enable == true ? 1 : 0,
     ori_price: q.quantity.ori_price,
     sale_price: q.quantity.sale_price,
     specOptions: JSON.stringify(q.quantity.specOptions),
@@ -146,7 +146,7 @@ router.post('/commodity', (req, res) => {
   });
 });
 
-/* 修改單一 / 批次 */
+/* 修改單一 */
 router.put('/commodity/:id', (req, res) => {
   const id = req.params.id;
   const data = originType(req.body);
