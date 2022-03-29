@@ -116,7 +116,7 @@ const originType = q => {
     specOptions: JSON.stringify(q.quantity.specOptions),
     inStock: q.quantity.inStock,
     weight: q.quantity.weight,
-    limit_num: q.quantitylimit_num
+    limit_num: q.quantity.limit_num
   };
   return data;
 };
