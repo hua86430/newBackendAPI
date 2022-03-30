@@ -6,6 +6,9 @@
     "start": "babel-node ./bin/www",
     "w": "nodemon babel-node ./bin/www"
   },
+  "engines": {
+    "node": "16.14.2"
+  },
   "dependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
