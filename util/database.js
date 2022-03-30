@@ -1,12 +1,13 @@
+const config = require('./development_config');
 const mysql = require('mysql2');
 
 //AWS
 const pool = mysql.createPool({
-  host: "api.czn8qpmir7dt.us-east-1.rds.amazonaws.com",
-  user: "root",
-  password: "17934600",
-  database: "api",
-  multipleStatements: true,
+  host: config.mysql.host,
+  user: config.mysql.user,
+  password: config.mysql.password,
+  database: config.mysql.database,
+  multipleStatements: true
 });
 
 module.exports = pool;

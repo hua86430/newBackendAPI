@@ -130,6 +130,7 @@ const getCommodity = (req, res) => {
       message: '',
       data: dataField(rows)
     });
+    res.end();
   });
 };
 /* 取得資料 */
