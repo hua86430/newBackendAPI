@@ -2,6 +2,7 @@ var express = require('express');
 var db = require('../util/database');
 var router = express.Router();
 const getDate = require('../plugins/getDate');
+const check = require('../plugins/checkObj');
 
 /*-----------------------  category Page -----------------------*/
 const getData = (req, res) => {
@@ -26,7 +27,24 @@ router.post('/category/update', (req, res, next) => {
     getData(req, res);
   });
 });
+router.put('/category/update/:id', (req, res) => {
+  const data = req.body;
+  const id = req.params.id;
+  const checkData = { ...data };
+  checkData.id = Number(id);
 
+  db.query(`SELECT * FROM \`api\`.\`categoryPage\` WHERE id = ${id}`, (err, rows) => {
+    if (err) throw err;
+    if (check(rows[0], data)) {
+      getData(req, res);
+    } else {
+      db.query(`UPDATE \`api\`.\`categoryPage\` SET ? WHERE id = ${id}`, data, (err, rows) => {
+        if (err) throw err;
+        getData(req, res);
+      });
+    }
+  });
+});
 router.delete('/category/:id', (req, res) => {
   let id = req.params.id;
   if (id == 'delAll') {
@@ -123,11 +141,20 @@ const originType = q => {
 const getCommodity = (req, res) => {
   db.query('SELECT * FROM api.commodity', (err, rows) => {
     if (err) throw err;
+    let arr = [];
+    for (let i = 0; i < rows.length; i++) {
+      arr.push(rows[i].category);
+    }
+    let cList = arr.filter((item, index) => arr.indexOf(item) === index);
+    cList.sort();
+    cList.unshift('全部商品');
+
     res.send({
       success: true,
       code: 200,
       message: '',
-      data: dataField(rows)
+      data: dataField(rows),
+      categoryList: cList
     });
     res.end();
   });
@@ -150,7 +177,6 @@ router.post('/commodity', (req, res) => {
 router.put('/commodity/:id', (req, res) => {
   const id = req.params.id;
   const data = originType(req.body);
-
   if (typeof id === 'string') {
     db.query(`UPDATE \`api\`.\`commodity\` SET ? WHERE id =${id}`, data, err => {
       if (err) throw err;

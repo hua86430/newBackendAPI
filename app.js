@@ -15,7 +15,7 @@ var cors = require('cors');
 const corsOptions = {
   // origin: ['https://www.example.com', 'https://localhost:3000', 'http://localhost:3000','https://168money-line.local/backend/','https://demo.168money.com.tw/','https://localhost'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-  origin: "*",
+  origin: '*',
   allowedHeaders: ['Content-Type', '*'],
   preflightContinue: false,
   optionsSuccessStatus: 200
@@ -34,10 +34,10 @@ app.use('/devAPI', swaggerUi.serve, swaggerUi.setup(doc));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -46,7 +46,6 @@ app.use('/api', apiRouter);
 app.use('/dev', devRouter);
 app.use('/login', login);
 app.use('/register', register);
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
