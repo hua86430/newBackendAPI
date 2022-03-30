@@ -13,9 +13,11 @@ var register = require('./routes/register');
 var app = express();
 var cors = require('cors');
 const corsOptions = {
-  origin: ['https://www.example.com', 'https://localhost:3000', 'http://localhost:3000'],
+  // origin: ['https://www.example.com', 'https://localhost:3000', 'http://localhost:3000','https://168money-line.local/backend/','https://demo.168money.com.tw/','https://localhost'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+  origin: "*",
   allowedHeaders: ['Content-Type', '*'],
+  preflightContinue: false,
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
