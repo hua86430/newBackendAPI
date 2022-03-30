@@ -7,6 +7,7 @@ const pool = mysql.createPool({
   user: config.mysql.user,
   password: config.mysql.password,
   database: config.mysql.database,
+  timezone: '+08:00',
   multipleStatements: true
 });
 
