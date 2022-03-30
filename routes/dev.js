@@ -95,7 +95,7 @@ const dataField = data => {
 const originType = q => {
   const data = {
     checkBox: '0',
-    createAt: getDate('noneSec'),
+    createAt: q.createAt === '' ? getDate('noneSec') : q.createAt,
     imageUrl: q.file.imageUrl,
     fileName: q.file.fileName,
     name: q.commodity.name,
@@ -195,5 +195,6 @@ router.patch('/commodity', (req, res) => {
   );
 });
 /*-----------------------  commodity Page -----------------------*/
+/* 商品分類列表 搜尋功能 */
 
 module.exports = router;
