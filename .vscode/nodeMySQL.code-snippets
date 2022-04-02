@@ -1,0 +1,71 @@
+{
+  "SELECT": {
+    "scope": "javascript,typescript",
+    "prefix": "dbSelect",
+    "body": [
+      "db.query(`SELECT * FROM ${1:TABLE} ${2}`, (err, rows) => {",
+      "\tif (err) throw err;",
+      "\t${3:// Do something...}",
+      "});"
+    ],
+    "description": "SELECT TABLE"
+  },
+  "INSERT": {
+    "scope": "javascript,typescript",
+    "prefix": "dbInsert",
+    "body": [
+      "db.query(`INSERT INTO ${1:TABLE} SET ?`, ${2:data} , (err, rows) => {",
+      "\tif (err) throw err;",
+      "\t${3:// Do something...}",
+      "});"
+    ],
+    "description": "INSERT TABLE"
+  },
+  "Batch Update": {
+    "scope": "javascript,typescript",
+    "prefix": "dbInsertBatch",
+    "body": [
+      "db.query(`INSERT INTO ${1:TABLE} (${2:column},${3:column1}) VALUES ${${4:SQLquery}} ON DUPLICATE KEY UPDATE ${2:column} = VALUES(${2:column}) , ${3:column1} = VALUES(${3:column1})` , (err, rows) => {",
+      "\tif (err) throw err;",
+      "\t${5:// Do something...}",
+      "});"
+    ],
+    "description": "Batch UPDATE TABLE"
+  },
+  "UPDATE": {
+    "scope": "javascript,typescript",
+    "prefix": "dbUpdate",
+    "body": [
+      "db.query(`UPDATE ${1:TABLE} SET ? WHERE ${2:id} = ${${3:id}}`, ${4:data} , (err, rows) => {",
+      "\tif (err) throw err;",
+      "\t${5:// Do something...}",
+      "});"
+    ],
+    "description": "UPDATE TABLE"
+  },
+  "DELETE": {
+    "scope": "javascript,typescript",
+    "prefix": "dbDelete",
+    "body": [
+      "db.query(`DELETE FROM ${1:TABLE} WHERE ${2:id} = ${${3:id}}` , (err, rows) => {",
+      "\tif (err) throw err;",
+      "\t${4:// Do something...}",
+      "});"
+    ],
+    "description": "UPDATE TABLE"
+  },
+  "Batch DELETE": {
+    "scope": "javascript,typescript",
+    "prefix": "dbDeleteBatch",
+    "body": [
+      "db.query(`DELETE FROM ${1:TABLE} WHERE ${2:id} IN ${${3:SQLquery}}` , (err, rows) => {",
+      "\tif (err) throw err;",
+      "\t${4:// Do something...}",
+      "});"
+    ],
+    "description": "Batch DELETE TABLE"
+  }
+}
+
+
+
