@@ -20,7 +20,7 @@ module.exports = {
     cat
       .post(data)
       .then(result => {
-        if (result.status) {
+        if (result.success) {
           getData(req, res);
         }
       })
@@ -34,7 +34,7 @@ module.exports = {
     cat
       .put(id, data)
       .then(result => {
-        if (result.status) {
+        if (result.success) {
           getData(req, res);
         }
       })
@@ -45,7 +45,7 @@ module.exports = {
     cat
       .delete(id)
       .then(result => {
-        if (result.status) getData(req, res);
+        if (result.success) getData(req, res);
       })
       .catch(err => res.send(err));
   }

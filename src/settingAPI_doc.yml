@@ -103,7 +103,7 @@ paths:
                     type: number
                     description: "狀態碼"
                     example: 200
-                  status:
+                  success:
                     type: boolean
                     example: true
                   message:
@@ -120,7 +120,7 @@ paths:
                     type: number
                     description: "狀態碼"
                     example: 400
-                  status:
+                  success:
                     type: boolean
                     example: false
                   message:
@@ -361,11 +361,11 @@ components:
               type: string
               description: "預購到貨通知"
               example: "1"
-            s2s_shipment_status_send:
+            s2s_shipment_success_send:
               type: string
               description: "店到店通知"
               example: "1"
-            shipment_status_send:
+            shipment_success_send:
               type: string
               description: "出貨通知"
               example: "1"
@@ -397,7 +397,7 @@ components:
           type: object
           description: "直播通知開關及內文設定"
           properties:
-            status:
+            success:
               type: boolean
               description: "直播通知 on/off"
               example: true
@@ -466,7 +466,7 @@ components:
           type: number
           description: "狀態碼"
           example: 200
-        status:
+        success:
           type: boolean
           example: true
         message:
@@ -482,7 +482,7 @@ components:
           type: number
           description: "狀態碼"
           example: 400
-        status:
+        success:
           type: boolean
           example: false
         message:

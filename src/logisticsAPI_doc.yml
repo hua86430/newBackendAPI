@@ -485,7 +485,7 @@ components:
           type: number
           description: "狀態碼"
           example: 200
-        status:
+        success:
           type: boolean
           example: true
         message:
@@ -500,7 +500,7 @@ components:
           type: number
           description: "狀態碼"
           example: 200
-        status:
+        success:
           type: boolean
           example: true
         message:
@@ -515,7 +515,7 @@ components:
           type: number
           description: "狀態碼"
           example: 400
-        status:
+        success:
           type: boolean
           example: false
         message:

@@ -4,7 +4,7 @@ const getData = (req, res) => {
   com
     .get()
     .then(result => {
-      if (result.status) res.send(result);
+      if (result.success) res.send(result);
     })
     .catch(err => res.send(err));
 };
@@ -18,7 +18,7 @@ module.exports = {
     com
       .post(req.body)
       .then(result => {
-        if (result.status) getData(req, res);
+        if (result.success) getData(req, res);
       })
       .catch(err => res.send(err));
   },
@@ -27,7 +27,7 @@ module.exports = {
     com
       .put(req.params.id, req.body)
       .then(result => {
-        if (result.status) getData(req, res);
+        if (result.success) getData(req, res);
       })
       .catch(err => res.send(err));
   },
@@ -46,7 +46,7 @@ module.exports = {
     com
       .delete(sql)
       .then(result => {
-        if (result.status) getData(req, res);
+        if (result.success) getData(req, res);
       })
       .catch(err => res.send(err));
   },
@@ -62,7 +62,7 @@ module.exports = {
     com
       .patch(sql)
       .then(result => {
-        if (result.status) getData(req, res);
+        if (result.success) getData(req, res);
       })
       .catch(err => res.send(err));
   }

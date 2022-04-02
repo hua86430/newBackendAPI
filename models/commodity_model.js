@@ -85,7 +85,7 @@ module.exports = {
         if (err) {
           console.log(err);
           result = {
-            status: false,
+            success: false,
             code: 400,
             message: '伺服器錯誤，請稍後再試！'
           };
@@ -101,7 +101,7 @@ module.exports = {
         cList.unshift('全部商品');
 
         result = {
-          status: true,
+          success: true,
           code: 200,
           data: dataField(rows),
           categoryList: cList
@@ -117,7 +117,7 @@ module.exports = {
         if (err) {
           console.log(err);
           result = {
-            status: false,
+            success: false,
             code: 400,
             message: '伺服器錯誤，請稍後再試！'
           };
@@ -125,7 +125,7 @@ module.exports = {
           return;
         }
         result = {
-          status: true,
+          success: true,
           code: 200
         };
         resolve(result);
@@ -138,7 +138,7 @@ module.exports = {
         if (err) {
           console.log(err);
           result = {
-            status: false,
+            success: false,
             code: 400,
             message: '伺服器錯誤，請稍後再試！'
           };
@@ -146,7 +146,7 @@ module.exports = {
           return;
         }
         result = {
-          status: true,
+          success: true,
           code: 200
         };
         resolve(result);
@@ -159,7 +159,7 @@ module.exports = {
         if (err) {
           console.log(err);
           result = {
-            status: false,
+            success: false,
             code: 400,
             message: '伺服器錯誤，請稍後再試！'
           };
@@ -167,7 +167,7 @@ module.exports = {
           return;
         }
         result = {
-          status: true,
+          success: true,
           code: 200
         };
         resolve(result);
@@ -182,7 +182,7 @@ module.exports = {
           if (err) {
             console.log(err);
             result = {
-              status: false,
+              success: false,
               code: 400,
               message: '伺服器錯誤，請稍後再試！'
             };
@@ -190,7 +190,7 @@ module.exports = {
             return;
           }
           result = {
-            status: true,
+            success: true,
             code: 200
           };
           resolve(result);

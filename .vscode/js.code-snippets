@@ -22,7 +22,7 @@
       "\t\t\tif (err) {",
         "\t\t\t\tconsole.log(err);",
         "\t\t\t\tresult = {",
-          "\t\t\t\t\tstatus: false,",
+          "\t\t\t\t\tsuccess: false,",
           "\t\t\t\t\tcode: 400,",
           "\t\t\t\t\tmessage: '伺服器錯誤，請稍後再試！'",
         "\t\t\t\t};",

@@ -14,7 +14,7 @@ module.exports = {
           if (err) {
             console.log(err);
             result = {
-              status: false,
+              success: false,
               code: 400,
               message: '伺服器錯誤，請稍後再試！'
             };
@@ -22,7 +22,7 @@ module.exports = {
             return;
           }
           result = {
-            status: true,
+            success: true,
             code: 200,
             data: rows
           };
@@ -37,7 +37,7 @@ module.exports = {
         if (err) {
           console.log(err);
           result = {
-            status: false,
+            success: false,
             code: 400,
             message: '伺服器錯誤，請稍後再試！'
           };
@@ -45,7 +45,7 @@ module.exports = {
           return;
         }
         result = {
-          status: true,
+          success: true,
           code: 200
         };
         resolve(result);
@@ -58,7 +58,7 @@ module.exports = {
         if (err) {
           console.log(err);
           result = {
-            status: false,
+            success: false,
             code: 400,
             message: '伺服器錯誤，請稍後再試！'
           };
@@ -66,7 +66,7 @@ module.exports = {
           return;
         }
         result = {
-          status: true,
+          success: true,
           code: 200
         };
         resolve(result);
@@ -79,14 +79,14 @@ module.exports = {
         if (err) {
           console.log(err);
           result = {
-            status: false,
+            success: false,
             code: 400,
             message: '伺服器錯誤，請稍後再試！'
           };
           reject(result);
         }
         result = {
-          status: true,
+          success: true,
           code: 200
         };
         resolve(result);
